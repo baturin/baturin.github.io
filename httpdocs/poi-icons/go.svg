@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="200"
+   height="200"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="Italian_traffic_signs_-_icona_aeroporto.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata2493">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="708"
+     inkscape:window-width="1024"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="2.31"
+     inkscape:cx="100"
+     inkscape:cy="100"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:current-layer="svg2" />
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 100 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="200 : 100 : 1"
+       inkscape:persp3d-origin="100 : 66.666667 : 1"
+       id="perspective2495" />
+  </defs>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     id="rect2881"
+     width="200.9709"
+     height="200.61583"
+     x="-0.052549254"
+     y="-0.30791464"
+     rx="0"
+     ry="0" />
+  <path
+     style="fill:#000000"
+     id="path4612"
+     d="M 82.82162,136.03465 L 68.52101,108.86202 L 56.69759,108.29216 C 37.87122,107.3848 24.93959,104.46489 22.91156,100.66346 C 22.282,99.483393 22.58927,98.961022 24.67123,97.671853 C 30.12688,94.293653 40.28452,92.417902 57.32699,91.641509 L 68.51852,91.13166 L 82.81402,63.957952 L 97.10949,36.784241 L 103.0713,36.784241 C 106.35029,36.784241 109.03309,36.963391 109.03309,37.182355 C 109.03309,37.401315 106.09379,47.526462 102.50131,59.682679 C 97.32129,77.210788 95.96952,82.791946 95.96952,86.650997 L 95.96952,91.517106 L 105.4311,91.517106 C 114.83786,91.517106 133.69785,93.035936 147.24388,94.884379 L 154.33262,95.851685 L 161.40532,87.131868 L 168.47801,78.412053 L 172.18294,78.412053 C 174.22066,78.412053 175.88786,78.63594 175.88786,78.909581 C 175.88786,79.183216 173.62681,83.357451 170.8633,88.185646 C 168.09979,93.013841 166.02434,97.265507 166.25125,97.633778 C 166.47813,98.002048 168.73918,98.545011 171.27583,98.840351 C 173.81245,99.135691 175.88786,99.656117 175.88786,99.996841 C 175.88786,100.33756 173.81245,100.85799 171.27583,101.15333 C 168.73918,101.44867 166.47813,101.99163 166.25125,102.3599 C 166.02434,102.72819 168.09979,106.97982 170.8633,111.80803 C 173.62681,116.63622 175.88786,120.81045 175.88786,121.0841 C 175.88786,121.35774 174.22066,121.58162 172.18294,121.58162 L 168.47801,121.58162 L 161.2821,112.70989 C 156.38143,106.66797 153.70273,103.95484 152.88401,104.20388 C 149.38638,105.26786 122.18002,107.82797 109.99366,108.23984 L 95.96952,108.71381 L 95.96952,113.4613 C 95.96952,117.17149 97.39667,123.03795 102.50131,140.311 C 106.09379,152.46723 109.03309,162.59236 109.03309,162.81131 C 109.03309,163.03028 106.35315,163.20896 103.07764,163.20836 L 97.12219,163.20759 L 82.82162,136.03495 L 82.82162,136.03465 L 82.82162,136.03465 z" />
+  <rect
+     style="fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect4614"
+     y="2.8621531"
+     x="3.7447071"
+     ry="18.580454"
+     height="194.80614"
+     width="194.80612"
+     rx="18.580454" />
+</svg>
