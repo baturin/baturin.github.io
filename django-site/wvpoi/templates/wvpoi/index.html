@@ -1,0 +1,66 @@
+{% extends "wvpoi/page.html" %}
+
+{% block content %}
+This site contains listings and POI data from <a href="https://en.wikivoyage.org/wiki/Main_Page">Wikivoyage</a> 
+- the free worldwide travel guide that anyone can edit.
+Listing are provided in different formats, ready to be used in another project. These formats include:
+<ul>
+    <li>CSV</li>
+    <li>GPX</li>
+    <li>KML</li>
+    <li>SQL script to be used with SQLite</li>
+    <li>Raw OsmAnd XML</li>
+    <li>OsmAnd OBF file, ready to be used with OsmAnd</li>
+</ul>
+
+
+<h2>Latest ready to use data</h2>
+<p>
+<table class="table">
+    <tr>
+        <th>Language</th>
+        <th>Format</th>
+        <th>Download</th>
+    </tr>
+    <tr>
+        <td>English</td>
+        <td>XML, "wikivoyage" POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-en-latest.xml">Download</a></td>
+    </tr>
+    <tr>
+        <td>English</td>
+        <td>XML, user-defined POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-en-latest-user-defined.xml">Download</a></td>
+    </tr>
+    <tr>
+        <td>English</td>
+        <td>OBF, "wikivoyage" POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-en-latest.obf">Download</a></td>
+    </tr>
+    <tr>
+        <td>English</td>
+        <td>OBF, user-defined POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-en-latest-user-defined.obf">Download</a></td>
+    </tr>
+    <tr>
+        <td>Russian</td>
+        <td>XML, "wikivoyage" POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-ru-latest.xml">Download</a></td>
+    </tr>
+    <tr>
+        <td>Russian</td>
+        <td>XML, user-defined POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-ru-latest-user-defined.xml">Download</a></td>
+    </tr>
+    <tr>
+        <td>Russian</td>
+        <td>OBF, "wikivoyage" POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-ru-latest.obf">Download</a></td>
+    </tr>
+    <tr>
+        <td>Russian</td>
+        <td>OBF, user-defined POI type</td>
+        <td><a href="wikivoyage-poi/wikivoyage-listings-ru-latest-user-defined.obf">Download</a></td>
+    </tr>
+</table>
+{% endblock %}

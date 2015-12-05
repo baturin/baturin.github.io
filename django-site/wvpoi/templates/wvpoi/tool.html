@@ -1,0 +1,58 @@
+{% extends "wvpoi/page.html" %}
+
+{% block content %}
+Here is a description of the tool to generate data from Wikivoyage dumps.
+
+
+<h2>Pre-requisites</h2>
+To use the tool, you need to set up Java SE Runtime Environment 7.
+The tool is primary tested on Ubuntu Linux, however there are should be no problems running it on other OSes with JRE.
+
+
+<h2>Installation</h2>
+To install the tool:
+<ol>
+<li><a href="wikivoyage-listings.zip">Download</a> ZIP archive with the tool.</li>
+<li>Unpack the archive to any place you like.</li>
+</ol>
+
+
+<h2>Usage</h2>
+There are 2 modes of tool's usage:
+<ul>
+    <li>Single output file generation, when you specify single input source and single output format</li>
+    <li>Batch output file generation, also known as daily update, because we run this procedure on a daily basis to get up-to-date listings data</li>
+</ul>
+
+<h3>Single output file generation</h3>
+First, you need to specify source of input data. It could be:
+<ul>
+    <li>The latest available Wikivoyage dump. In that case, specify "-input-latest &lt;lang&gt;" option, where "&lt;lang&gt;" is a language of a dump to download. 
+    Now there are 2 supported languages: "ru" (Russian) and "en" (English)</li>
+    <li>An URL to download Wikivoyage dump from. In that case, specify "-input-url &lt;url&gt;" option</li>
+    <li>If you already have a downloaded dump, specify "input-file &lt;filename&gt;" option, where "&lt;filename&gt;" is a path to dump file</li>
+</ul>
+Then, specify output settings:
+<ul>
+    <li>To specify name of a file to put results to, pass "-output-filename &lt;filename&gt;" option</li>
+    <li>To specify format of a file you want to get, pass "-output-format &lt;format&gt;" option. At that moment, the following formats are available:  'osmand-xml', 'osmand-xml-user-defined', 'obf', 'obf-user-defined', 'csv', 'sql', 'gpx', 'kml'</li>
+</ul>
+
+<h3>Batch output file generation</h3>
+During batch output file generation, the tool automatically downloads the most recent Wikivoyage dumps for all supported languages, parses them and 
+creates output files in all available formats.
+First, with "-latest-count &lt;num&gt;" you could specify maximum number of dumps to download for each language. For example, if you want to generate data only
+for the latest dump, specify 1, if you want to generate data for the latest and the previous dumps, then specify 2.
+Additionally you could set different directories:
+<ul>
+    <li>
+    -listings-dir &lt;directory&gt;: output directory to put listings to
+    </li>
+    <li>
+    -dumps-cache-dir &lt;directory&gt;: directory to download and cache Wikivoyage dumps
+    </li>
+    <li>
+    -working-dir &lt;directory&gt;: directory for temporary files
+    </li>
+</ul>
+{% endblock %}
