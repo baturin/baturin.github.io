@@ -9,6 +9,7 @@
         <th>Language</th>
         <th>Format</th>
         <th>Compressed</th>
+        <th>Size</td>
         <th>Download</th>
     </tr>
     {% for listing in all_listings %}
@@ -17,6 +18,7 @@
         <td>{{listing.language_title}}</td>
         <td>{{listing.file_format_title}}</td>
         <td>{{listing.compressed_title}}</td>
+        <td>{{listing.size_title}}</td>
         <td><a href="wikivoyage-poi/{{listing.filename}}">Download</a></td>
     </tr>
     {% endfor %}

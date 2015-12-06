@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import os
 import re
 from . import settings
+from . import utils
 
 class WikivoyageListingsFile(object):
     def __init__(self, name, language, date, file_format, is_compressed):
@@ -71,6 +72,11 @@ class WikivoyageListingsFile(object):
     @property
     def is_latest(self):
         return self._date == 'latest'
+
+    @property
+    def size_title(self):
+        size = os.path.getsize(os.path.join(settings.LISTINGS_DIR, self._name))
+        return utils.format_file_size(size)
     
 
 def filter_none_values(lst):
