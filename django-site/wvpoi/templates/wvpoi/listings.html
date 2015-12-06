@@ -1,0 +1,24 @@
+{% extends "wvpoi/page.html" %}
+
+{% block content %}
+
+<p>
+<table class="table">
+    <tr>
+        <th>Date</th>
+        <th>Language</th>
+        <th>Format</th>
+        <th>Compressed</th>
+        <th>Download</th>
+    </tr>
+    {% for listing in all_listings %}
+    <tr>
+        <td>{{listing.date_title}}</td>
+        <td>{{listing.language_title}}</td>
+        <td>{{listing.file_format_title}}</td>
+        <td>{{listing.compressed_title}}</td>
+        <td><a href="wikivoyage-poi/{{listing.filename}}">Download</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

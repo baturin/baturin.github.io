@@ -35,6 +35,13 @@ class WikivoyageListingsFile(object):
         }.get(self.language_code, 'Unknown')
 
     @property
+    def date_title(self):
+        if self.is_latest:
+            return 'Latest'
+        else:
+            return self._date
+
+    @property
     def file_format(self):
         return self._file_format
 
@@ -52,6 +59,10 @@ class WikivoyageListingsFile(object):
             'user-defined.xml': 'XML, "user-defined" POI type',
             'validation-report.html': 'Validation report (HTML)'
         }.get(self._file_format, self._file_format)
+
+    @property
+    def compressed_title(self):
+        return 'Yes' if self._is_compressed else 'No'
 
     @property
     def filename(self):
@@ -74,6 +85,15 @@ def index(request):
     latest_listings = [l for l in all_listings if l.is_latest]
     latest_listings = sorted(latest_listings, key=lambda l: (l.language_code, l.file_format))
     return render(request, 'wvpoi/index.html', {'latest_listings': latest_listings})
+
+
+def listings(request):
+    all_listings = filter_none_values(
+        WikivoyageListingsFile.parse(filename) 
+        for filename in os.listdir(settings.LISTINGS_DIR)
+    )
+    all_listings = sorted(all_listings, key=lambda l: (l.date_title, l.language_code, l.file_format))
+    return render(request, 'wvpoi/listings.html', {'all_listings': all_listings})
 
 
 def tool(request):
