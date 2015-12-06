@@ -1,0 +1,7 @@
+<h2>Data license</h2>
+All data is under Creative Commons Attribution-ShareAlike license. You could find list of authors on the following pages: 
+<ul>
+{% for language in languages %}
+<li><a href="https://{{language.code}}.wikivoyage.org/wiki/Special:RecentChanges">{{language.description}}</a></li>
+{% endfor %}
+</ul>

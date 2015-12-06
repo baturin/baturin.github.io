@@ -4,6 +4,8 @@ import os
 import re
 from . import settings
 from . import utils
+from . import languages
+
 
 class WikivoyageListingsFile(object):
     def __init__(self, name, language, date, file_format, is_compressed):
@@ -90,7 +92,11 @@ def index(request):
     )
     latest_listings = [l for l in all_listings if l.is_latest]
     latest_listings = sorted(latest_listings, key=lambda l: (l.language_code, l.file_format))
-    return render(request, 'wvpoi/index.html', {'latest_listings': latest_listings})
+    context = {
+        'latest_listings': latest_listings,
+        'languages': languages.Languages.get_all_languages()
+    }
+    return render(request, 'wvpoi/index.html', context)
 
 
 def listings(request):
@@ -99,7 +105,11 @@ def listings(request):
         for filename in os.listdir(settings.LISTINGS_DIR)
     )
     all_listings = sorted(all_listings, key=lambda l: (l.date_title, l.language_code, l.file_format))
-    return render(request, 'wvpoi/listings.html', {'all_listings': all_listings})
+    context = {
+        'all_listings': all_listings,
+        'languages': languages.Languages.get_all_languages()
+    }
+    return render(request, 'wvpoi/listings.html', context)
 
 
 def tool(request):

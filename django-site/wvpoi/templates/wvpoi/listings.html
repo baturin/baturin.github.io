@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<p>
+<h2>All listings</h2>
 <table class="table">
     <tr>
         <th>Date</th>
@@ -23,4 +23,7 @@
     </tr>
     {% endfor %}
 </table>
+
+{% include 'wvpoi/data-license.html' %}
+
 {% endblock %}
