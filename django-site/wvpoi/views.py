@@ -113,4 +113,7 @@ def listings(request):
 
 
 def tool(request):
-    return render(request, 'wvpoi/tool.html')
+    context = {
+        'languages': languages.Languages.get_all_languages()
+    }
+    return render(request, 'wvpoi/tool.html', context)

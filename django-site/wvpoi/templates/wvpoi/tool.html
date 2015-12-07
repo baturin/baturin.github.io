@@ -27,8 +27,15 @@ There are 2 modes of tool's usage:
 <h3>Single output file generation</h3>
 First, you need to specify source of input data. It could be:
 <ul>
-    <li>The latest available Wikivoyage dump. In that case, specify "-input-latest &lt;lang&gt;" option, where "&lt;lang&gt;" is a language of a dump to download. 
-    Now there are 2 supported languages: "ru" (Russian) and "en" (English)</li>
+    <li>
+        The latest available Wikivoyage dump. In that case, specify "-input-latest &lt;lang&gt;" option, where "&lt;lang&gt;" is a language of a dump to download. 
+        Supported languages: 
+        <ul>
+            {% for language in languages %}
+            <li>"{{language.code}}" ({{language.description}})</li>
+            {% endfor %}
+        </ul>
+    </li>
     <li>An URL to download Wikivoyage dump from. In that case, specify "-input-url &lt;url&gt;" option</li>
     <li>If you already have a downloaded dump, specify "input-file &lt;filename&gt;" option, where "&lt;filename&gt;" is a path to dump file</li>
 </ul>
