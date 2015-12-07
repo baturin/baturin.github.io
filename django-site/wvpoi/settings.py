@@ -121,4 +121,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LISTINGS_DIR = '/home/alexey/wikivoyage/wikivoyage-listings/listings/'
+LISTINGS_DIR = '/var/www/wvpoi.batalex.ru/wikivoyage-poi'
