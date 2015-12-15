@@ -129,6 +129,9 @@ WSGIPythonPath {django_site_dir}:{virtualenv_dir}/lib/python2.7/site-packages/
     ServerAlias www.{site_name}
 
     WSGIScriptAlias / {django_site_dir}/wvpoi/wsgi.py
+    Alias /download/listings {listings_dir}
+    Alias /download/dumps {dumps_dir}
+    Alias /download/tool {tool_dir}
 
     <Directory {django_site_dir}/wvpoi>
         <Files wsgi.py>
@@ -138,8 +141,9 @@ WSGIPythonPath {django_site_dir}:{virtualenv_dir}/lib/python2.7/site-packages/
 </VirtualHost>
 
     """.format(
+        site_name=site_name,
         django_site_dir=django_site_dir, virtualenv_dir=virtualenv_dir,
-        site_name=site_name
+        listings_dir=listings_dir, dumps_dir=dumps_dir, tool_dir=tool_dir
     )
     _remove_file(apache_configuration_file)
     append(apache_configuration_file, apache_config)
