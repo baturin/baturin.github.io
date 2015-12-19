@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 import re
+import json
 from . import settings
 from . import utils
 from . import languages
+from . import models
 
 
 class WikivoyageListingsFile(object):
@@ -117,3 +119,48 @@ def tool(request):
         'languages': languages.Languages.get_all_languages()
     }
     return render(request, 'wvpoi/tool.html', context)
+
+def get_listings(request):
+    result = []
+
+    filter_language = request.GET.get('language', '')
+    filter_dict = {}
+    exclude_dict = {}
+
+    if filter_language:
+        filter_dict['language'] = filter_language
+
+    filter_article = request.GET.get('article', '')
+    if filter_article:
+        filter_dict['article'] = filter_article
+
+    positional_data = request.GET.get('positional_data', '')
+    if positional_data == 'true':
+        exclude_dict['latitude__isnull'] = True
+        exclude_dict['longitude__isnull'] = True
+
+    output_format = request.GET.get('format', 'json')
+
+    for listing in models.Listing.objects.filter(**filter_dict).exclude(**exclude_dict)[:500]:
+        if output_format == 'geojson':
+            result.append({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [float(listing.longitude), float(listing.latitude)]
+                },
+                "properties": {
+                    "name": listing.title
+                }
+            })
+        else:
+            result.append({
+                'title': listing.title,
+                'language': listing.language,
+                'article': listing.article,
+                'type': listing.type,
+                'latitude': str(listing.latitude),
+                'longitude': str(listing.longitude)
+            })
+
+    return HttpResponse(json.dumps(result))
