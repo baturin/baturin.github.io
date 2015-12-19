@@ -7,6 +7,7 @@ from . import settings
 from . import utils
 from . import languages
 from . import models
+from django.db.models import Q
 
 
 class WikivoyageListingsFile(object):
@@ -125,25 +126,56 @@ def get_listings(request):
 
     filter_language = request.GET.get('language', '')
     filter_dict = {}
-    exclude_dict = {}
+    excludes = None
+
+    query = Q()
 
     if filter_language:
-        filter_dict['language'] = filter_language
+        query &= Q(language=filter_language)
 
     filter_article = request.GET.get('article', '')
     if filter_article:
-        filter_dict['article'] = filter_article
+        query &= Q(article=filter_article)
 
     positional_data = request.GET.get('positional_data', '')
     if positional_data == 'true':
-        exclude_dict['latitude__isnull'] = True
-        exclude_dict['longitude__isnull'] = True
+        query &= Q(latitude__isnull=False) & Q(longitude__isnull=False)
 
     output_format = request.GET.get('format', 'json')
+    if output_format == 'geojson':
+        writer = GEOJSONOutpuFormat()
+    else:
+        writer = PlainJSONOutputFormat()
 
-    for listing in models.Listing.objects.filter(**filter_dict).exclude(**exclude_dict)[:500]:
-        if output_format == 'geojson':
+    listings_iter = models.Listing.objects.filter(query)
+    return HttpResponse(writer.get_as_string(listings_iter))
+
+class OutputFormat(object):
+    def get_as_string(self, listings):
+        raise NotImplementedError()
+
+class PlainJSONOutputFormat(OutputFormat):
+    def get_as_string(self, listings):
+        result = []
+        for listing in listings:
             result.append({
+                'title': listing.title,
+                'language': listing.language,
+                'article': listing.article,
+                'type': listing.type,
+                'latitude': str(listing.latitude),
+                'longitude': str(listing.longitude)
+            })
+        return json.dumps(result)
+
+class GEOJSONOutpuFormat(OutputFormat):
+    def get_as_string(self, listings):
+        result = {
+            "type": "FeatureCollection",
+            "features": []
+        }
+        for listing in listings:
+            result["features"].append({
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
@@ -153,14 +185,4 @@ def get_listings(request):
                     "name": listing.title
                 }
             })
-        else:
-            result.append({
-                'title': listing.title,
-                'language': listing.language,
-                'article': listing.article,
-                'type': listing.type,
-                'latitude': str(listing.latitude),
-                'longitude': str(listing.longitude)
-            })
-
-    return HttpResponse(json.dumps(result))
+        return json.dumps(result)
