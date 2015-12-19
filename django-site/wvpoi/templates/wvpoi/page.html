@@ -2,6 +2,7 @@
 {% url 'home' as home %}
 {% url 'tool' as tool %}
 {% url 'listings' as listings %}
+{% url 'map' as map %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -47,6 +48,7 @@
                   <li class="{% active request home %}"><a href="{{home}}">Home</a></li>
                   <li class="{% active request tool %}"><a href="{{tool}}">Tool</a></li>
                   <li class="{% active request listings %}"><a href="{{listings}}">Listings</a></li>
+                  <li class="{% active request map %}"><a href="{{map}}">Map</a></li>
                   <li><a href="https://github.com/baturin/wikivoyage-listings">Project on GitHub</a></li>
               </ul>
             </div>
