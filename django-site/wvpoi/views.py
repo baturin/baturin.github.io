@@ -121,6 +121,9 @@ def tool(request):
     }
     return render(request, 'wvpoi/tool.html', context)
 
+def map_view(request):
+    return render(request, 'wvpoi/map.html')
+
 def get_listings(request):
     result = []
 
@@ -182,7 +185,8 @@ class GEOJSONOutpuFormat(OutputFormat):
                     "coordinates": [float(listing.longitude), float(listing.latitude)]
                 },
                 "properties": {
-                    "name": listing.title
+                    "name": listing.title,
+                    "description": listing.description
                 }
             })
         return json.dumps(result)

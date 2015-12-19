@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^$', views.index, name='home'),
     url(r'^tool/$', views.tool, name='tool'),
     url(r'^listings/$', views.listings, name='listings'),
+    url(r'^map/$', views.map_view, name='map'),
     url(r'^api/get-listings/$', views.get_listings, name='get_listings'),
 ]
