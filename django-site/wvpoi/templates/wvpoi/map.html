@@ -24,11 +24,29 @@
         accessToken: 'pk.eyJ1IjoiYmF0YWxleCIsImEiOiJjaWlkZGp4ZG8wMDB3dnNrdXMxMW42bDNwIn0.cW5ejS14v3NIB-1A3tDjfA'
     }).addTo(map);
 
+    var languages = L.control();
+
+    languages.onAdd = function (map) {
+        this._div = L.DomUtil.create('div');
+        this.update();
+        return this._div;
+    };
+
+    languages.update = function (props) {
+        this._div.innerHTML = '<input type="radio" name="language" checked="checked" value="en"><label>English</label>' + 
+            '<input type="radio" name="language" value="fr"><label>French</label>' +
+            '<input type="radio" name="language" value="ru"><label>Russian</label>'; 
+    };
+
+    languages.addTo(map);
+
     function update() {
+        language = $('input[name=language]:checked').val();
+
         oldLayer = layer;
         bounds = map.getBounds();
         $.ajax({
-          url: "/api/get-listings/?language=en&positional_data=true&limit=200&format=geojson&min_latitude=" + bounds.getSouth() + "&max_latitude=" + bounds.getNorth() + "&min_longitude=" + bounds.getWest() + "&max_longitude" + bounds.getNorth(),
+          url: "/api/get-listings/?language=" + language + "&positional_data=true&limit=200&format=geojson&min_latitude=" + bounds.getSouth() + "&max_latitude=" + bounds.getNorth() + "&min_longitude=" + bounds.getWest() + "&max_longitude" + bounds.getNorth(),
         }).done(function(response) {
             function onEachFeature(feature, layer) {
                 if (feature.properties && feature.properties.name) {
@@ -51,6 +69,11 @@
     map.on('moveend', function() { 
         update();
     });
+
+    $("input[name=language]").change(function(){ 
+        update();
+    });
+
 
     update();
 </script>
