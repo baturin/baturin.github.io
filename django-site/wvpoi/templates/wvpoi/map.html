@@ -15,6 +15,7 @@
 <div id="map"></div>
 <script>
     var map = L.map('map').setView([55.6799, 37.7737], 10);
+    var layer = null;
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -23,20 +24,34 @@
         accessToken: 'pk.eyJ1IjoiYmF0YWxleCIsImEiOiJjaWlkZGp4ZG8wMDB3dnNrdXMxMW42bDNwIn0.cW5ejS14v3NIB-1A3tDjfA'
     }).addTo(map);
 
-    $.ajax({
-      url: "/api/get-listings/?language=en&article=Moscow&positional_data=true&format=geojson",
-    }).done(function(response) {
-        function onEachFeature(feature, layer) {
-            if (feature.properties && feature.properties.name) {
-                popupContents = '<b>' + feature.properties.name + '</b>';
-                if (feature.properties.description) {
-                    popupContents += '<br/>' + feature.properties.description;
+    function update() {
+        oldLayer = layer;
+        bounds = map.getBounds();
+        $.ajax({
+          url: "/api/get-listings/?language=en&positional_data=true&limit=200&format=geojson&min_latitude=" + bounds.getSouth() + "&max_latitude=" + bounds.getNorth() + "&min_longitude=" + bounds.getWest() + "&max_longitude" + bounds.getNorth(),
+        }).done(function(response) {
+            function onEachFeature(feature, layer) {
+                if (feature.properties && feature.properties.name) {
+                    popupContents = '<b>' + feature.properties.name + '</b>';
+                    if (feature.properties.description) {
+                        popupContents += '<br/>' + feature.properties.description;
+                    }
+                    layer.bindPopup(popupContents);
                 }
-                layer.bindPopup(popupContents);
             }
-        }
 
-        L.geoJson($.parseJSON(response), {onEachFeature: onEachFeature}).addTo(map);
+            layer = L.geoJson($.parseJSON(response), {onEachFeature: onEachFeature});
+            layer.addTo(map);
+            if (oldLayer) {
+                map.removeLayer(oldLayer);
+            }
+        });
+    }
+
+    map.on('moveend', function() { 
+        update();
     });
+
+    update();
 </script>
 {% endblock %}

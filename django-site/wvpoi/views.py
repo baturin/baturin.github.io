@@ -144,6 +144,22 @@ def get_listings(request):
     if positional_data == 'true':
         query &= Q(latitude__isnull=False) & Q(longitude__isnull=False)
 
+    max_latitude = request.GET.get('max_latitude', '')
+    if max_latitude != '':
+        query &= Q(latitude__lte=max_latitude)
+
+    min_latitude = request.GET.get('min_latitude', '')
+    if min_latitude != '':
+        query &= Q(latitude__gte=min_latitude)
+
+    max_longitude = request.GET.get('max_longitude', '')
+    if max_longitude != '':
+        query &= Q(longitude__lte=max_longitude)
+
+    min_longitude = request.GET.get('min_longitude', '')
+    if min_longitude != '':
+        query &= Q(longitude__gte=min_longitude)
+
     output_format = request.GET.get('format', 'json')
     if output_format == 'geojson':
         writer = GEOJSONOutpuFormat()
@@ -151,6 +167,11 @@ def get_listings(request):
         writer = PlainJSONOutputFormat()
 
     listings_iter = models.Listing.objects.filter(query)
+
+    limit = request.GET.get('limit', None)
+    if limit is not None:
+        listings_iter = listings_iter[:limit]
+
     return HttpResponse(writer.get_as_string(listings_iter))
 
 class OutputFormat(object):
