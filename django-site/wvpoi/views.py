@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 import os
 import re
 import json
@@ -171,38 +171,44 @@ def get_listings(request):
     limit = request.GET.get('limit', None)
     if limit is not None:
         listings_iter = listings_iter[:limit]
+    listings_iter = listings_iter.iterator()
 
-    return HttpResponse(writer.get_as_string(listings_iter))
+    response = StreamingHttpResponse(writer.iter_data(listings_iter))
+    return response
 
 def api(request):
     return render(request, 'wvpoi/api.html')
 
 class OutputFormat(object):
-    def get_as_string(self, listings):
+    def iter_data(self, listings):
         raise NotImplementedError()
 
 class PlainJSONOutputFormat(OutputFormat):
-    def get_as_string(self, listings):
-        result = []
+    def iter_data(self, listings):
+        yield '[\n'
+        has_previous = False
         for listing in listings:
-            result.append({
+            if has_previous:
+                yield ',\n'
+            yield json.dumps({
                 'title': listing.title,
                 'language': listing.language,
                 'article': listing.article,
                 'type': listing.type,
                 'latitude': str(listing.latitude),
                 'longitude': str(listing.longitude)
-            })
-        return json.dumps(result)
+            }) 
+            has_previous = True
+        yield '\n]'
 
 class GEOJSONOutpuFormat(OutputFormat):
-    def get_as_string(self, listings):
-        result = {
-            "type": "FeatureCollection",
-            "features": []
-        }
+    def iter_data(self, listings):
+        yield '{"type": "FeatureCollection", "features": [\n'
+        has_previous = False
         for listing in listings:
-            result["features"].append({
+            if has_previous:
+                yield ',\n'
+            yield json.dumps({
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
@@ -212,5 +218,6 @@ class GEOJSONOutpuFormat(OutputFormat):
                     "name": listing.title,
                     "description": listing.description
                 }
-            })
-        return json.dumps(result)
+            }) 
+            has_previous = True
+        yield '\n]}'
