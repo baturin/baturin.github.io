@@ -46,7 +46,7 @@
         oldLayer = layer;
         bounds = map.getBounds();
         $.ajax({
-          url: "/api/get-listings/?language=" + language + "&positional_data=true&limit=200&format=geojson&min_latitude=" + bounds.getSouth() + "&max_latitude=" + bounds.getNorth() + "&min_longitude=" + bounds.getWest() + "&max_longitude" + bounds.getNorth(),
+          url: "/api/get-listings/?language=" + language + "&positional_data=true&limit=200&format=geojson&min_latitude=" + bounds.getSouth() + "&max_latitude=" + bounds.getNorth() + "&min_longitude=" + bounds.getWest() + "&max_longitude=" + bounds.getEast(),
         }).done(function(response) {
             function onEachFeature(feature, layer) {
                 if (feature.properties && feature.properties.name) {
