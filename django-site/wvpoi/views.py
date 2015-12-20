@@ -174,6 +174,9 @@ def get_listings(request):
 
     return HttpResponse(writer.get_as_string(listings_iter))
 
+def api(request):
+    return render(request, 'wvpoi/api.html')
+
 class OutputFormat(object):
     def get_as_string(self, listings):
         raise NotImplementedError()

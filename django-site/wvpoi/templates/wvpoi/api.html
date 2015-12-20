@@ -1,0 +1,33 @@
+{% extends "wvpoi/page.html" %}
+
+{% block content %}
+<h2>Overview</h2>
+<div>
+    This site provides API to get data from listings.
+</div>
+<div>
+    Use HTTP GET on the following URL: http://wvpoi.batalex.ru/api/get-listings/
+</div>
+<h2>Possible arguments</h2>
+<table class="table">
+    <tr><th>Argument</th><th>Description</th></tr>
+    <tr><td>language</td><td>Language code: 'en', 'fr', 'ru'</td></tr>
+    <tr><td>article</td><td>Get listings only for that article</td></tr>
+    <tr><td>positional_data</td><td>If set to 'true', only listings with valid latitude and longitude will be selected</td></tr>
+    <tr><td>max_latitude</td><td>Maximum latitude of a POI</td></tr>
+    <tr><td>min_latitude</td><td>Mininum latitude of a POI</td></tr>
+    <tr><td>max_longitude</td><td>Maximum longitude of a POI</td></tr>
+    <tr><td>min_longitude</td><td>Minimum longitude of a POI</td></tr>
+    <tr><td>format</td><td>By default, data is returned as plain simple JSON. Also you could specify 'geojson' to get output in GeoJSON format</td></tr>
+    <tr><td>limit</td><td>Maximum number of listings to return</td></tr>
+</table>
+<h2>Examples</h2>
+<table class="table">
+    <tr><th>URL</th><th>Description</th></tr>
+    <tr><td><a href="http://wvpoi.batalex.ru/api/get-listings/?lang=fr">http://wvpoi.batalex.ru/api/get-listings/?lang=fr</a></td><td>Get all listings from French Wikivoyage</td></tr>
+    <tr><td><a href="http://wvpoi.batalex.ru/api/get-listings/?lang=ru&amp;positional_data=true">http://wvpoi.batalex.ru/api/get-listings/?lang=ru&amp;positional_data=true</a></td><td>Get all listings from Russian Wikivoyage, with valid latitude and longitude</td></tr>
+    <tr><td><a href="http://wvpoi.batalex.ru/api/get-listings/?language=en&amp;positional_data=true&amp;limit=200&amp;format=geojson&amp;min_latitude=42.268925435483496&amp;max_latitude=42.42066868499512&amp;min_longitude=-71.24427795410156&amp;max_longitude42.42066868499512">http://wvpoi.batalex.ru/api/get-listings/?language=en&amp;positional_data=true&amp;limit=200&amp;format=geojson&amp;min_latitude=42.268925435483496&amp;max_latitude=42.42066868499512&amp;min_longitude=-71.24427795410156&amp;max_longitude42.42066868499512</a></td><td>Get all English POIs around Boston in GeoJSON format</td></tr>
+</table>
+
+{% endblock %}
+
