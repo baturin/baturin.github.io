@@ -39,6 +39,7 @@
     };
 
     languages.addTo(map);
+    markers = {};
 
     function update() {
         language = $('input[name=language]:checked').val();
@@ -48,17 +49,31 @@
         $.ajax({
           url: "/api/get-listings/?language=" + language + "&positional_data=true&limit=200&format=geojson&min_latitude=" + bounds.getSouth() + "&max_latitude=" + bounds.getNorth() + "&min_longitude=" + bounds.getWest() + "&max_longitude=" + bounds.getEast(),
         }).done(function(response) {
-            function onEachFeature(feature, layer) {
-                if (feature.properties && feature.properties.name) {
-                    popupContents = '<b>' + feature.properties.name + '</b>';
-                    if (feature.properties.description) {
-                        popupContents += '<br/>' + feature.properties.description;
-                    }
-                    layer.bindPopup(popupContents);
+            markerKeys = Object.keys(markers);
+
+            for (var i = 0; i < markerKeys.length; i++) {
+                var key = markerKeys[i];
+
+                if (markers[key].language != language) {
+                    map.removeLayer(markers[key].marker);
+                    delete markers[key];
                 }
             }
 
-            function pointToLayer(feature, latlng) {
+            markerKeys = Object.keys(markers);
+
+            maxExceed = 500;
+
+            if (markerKeys.length > maxExceed) {
+                for (var i = 0; i < markerKeys.length - maxExceed; i++) {
+                    var key = markerKeys[i];
+
+                    map.removeLayer(markers[key].marker);
+                    delete markers[key];
+                }
+            }
+
+            function getMarkerOptions(type) {
                 var markerOptions = {
                     radius: 8,
                     fillColor: "#ff7800",
@@ -68,46 +83,70 @@
                     fillOpacity: 0.9
                 };
 
-                if (feature.properties && feature.properties.type) {
-                    switch (feature.properties.type) {
-                        case 'go':
-                            markerOptions.fillColor = 'brown';
-                            break;
-                        case 'see':
-                            markerOptions.fillColor = '#4682B4';
-                            break;
-                        case 'do':
-                            markerOptions.fillColor = 'grey';
-                            break;
-                        case 'buy':
-                            markerOptions.fillColor = 'mediumaquamarine';
-                            break;
-                        case 'eat':
-                            markerOptions.fillColor = 'chocolate';
-                            break;
-                        case 'drink':
-                            markerOptions.fillColor = 'black';
-                            break;
-                        case 'sleep':
-                            markerOptions.fillColor = 'MidnightBlue';
-                            break;
-                        case 'other':
-                            markerOptions.fillColor = 'forestgreen';
-                            break;
-                        case 'vicinity':
-                            markerOptions.fillColor = 'sienna'
-                            break;
-                    }
+                switch (type) {
+                    case 'go':
+                        markerOptions.fillColor = 'brown';
+                        break;
+                    case 'see':
+                        markerOptions.fillColor = '#4682B4';
+                        break;
+                    case 'do':
+                        markerOptions.fillColor = 'grey';
+                        break;
+                    case 'buy':
+                        markerOptions.fillColor = 'mediumaquamarine';
+                        break;
+                    case 'eat':
+                        markerOptions.fillColor = 'chocolate';
+                        break;
+                    case 'drink':
+                        markerOptions.fillColor = 'black';
+                        break;
+                    case 'sleep':
+                        markerOptions.fillColor = 'MidnightBlue';
+                        break;
+                    case 'other':
+                        markerOptions.fillColor = 'forestgreen';
+                        break;
+                    case 'vicinity':
+                        markerOptions.fillColor = 'sienna'
+                        break;
                 }
 
-                return L.circleMarker(latlng, markerOptions);
+                return markerOptions;
             }
 
-            layer = L.geoJson($.parseJSON(response), {onEachFeature: onEachFeature, pointToLayer: pointToLayer});
-            layer.addTo(map);
-            if (oldLayer) {
-                map.removeLayer(oldLayer);
+            pois = $.parseJSON(response).features;
+            for (var i = 0; i < pois.length; i++) {
+                var poi = pois[i];
+
+                var lat = poi.geometry.coordinates[0];
+                var lon = poi.geometry.coordinates[1];
+                var name = poi.properties.name;
+                var description = poi.properties.description;
+                var type = poi.properties.type;
+                var wvpoiId = poi.properties.wvpoiId;
+
+                if (!markers[wvpoiId]) {
+                    marker = L.circleMarker([lon, lat], getMarkerOptions(type));
+
+                    if (name) {
+                        popupContents = '<b>' + name + '</b>';
+                        if (description) {
+                            popupContents += '<br/>' + description;
+                        }
+                        marker.bindPopup(popupContents);
+                    }
+
+                    marker.addTo(map);
+                    markers[wvpoiId] = {
+                        'language': language,
+                        'marker': marker
+                    };
+                }
             }
+
+            markerKeys = Object.keys(markers);
         });
     }
 
