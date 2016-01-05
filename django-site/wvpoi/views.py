@@ -216,7 +216,8 @@ class GEOJSONOutpuFormat(OutputFormat):
                 },
                 "properties": {
                     "name": listing.title,
-                    "description": listing.description
+                    "description": listing.description,
+                    "type": listing.type
                 }
             }) 
             has_previous = True

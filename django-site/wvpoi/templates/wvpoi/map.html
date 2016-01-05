@@ -58,7 +58,52 @@
                 }
             }
 
-            layer = L.geoJson($.parseJSON(response), {onEachFeature: onEachFeature});
+            function pointToLayer(feature, latlng) {
+                var markerOptions = {
+                    radius: 8,
+                    fillColor: "#ff7800",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                };
+
+                if (feature.properties && feature.properties.type) {
+                    switch (feature.properties.type) {
+                        case 'go':
+                            markerOptions.fillColor = 'brown';
+                            break;
+                        case 'see':
+                            markerOptions.fillColor = '#4682B4';
+                            break;
+                        case 'do':
+                            markerOptions.fillColor = 'grey';
+                            break;
+                        case 'buy':
+                            markerOptions.fillColor = 'mediumaquamarine';
+                            break;
+                        case 'eat':
+                            markerOptions.fillColor = 'chocolate';
+                            break;
+                        case 'drink':
+                            markerOptions.fillColor = 'black';
+                            break;
+                        case 'sleep':
+                            markerOptions.fillColor = 'MidnightBlue';
+                            break;
+                        case 'other':
+                            markerOptions.fillColor = 'forestgreen';
+                            break;
+                        case 'vicinity':
+                            markerOptions.fillColor = 'sienna'
+                            break;
+                    }
+                }
+
+                return L.circleMarker(latlng, markerOptions);
+            }
+
+            layer = L.geoJson($.parseJSON(response), {onEachFeature: onEachFeature, pointToLayer: pointToLayer});
             layer.addTo(map);
             if (oldLayer) {
                 map.removeLayer(oldLayer);
