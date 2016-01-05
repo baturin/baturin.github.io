@@ -126,15 +126,19 @@
                 var description = poi.properties.description;
                 var type = poi.properties.type;
                 var wvpoiId = poi.properties.wvpoiId;
+                var article = poi.properties.article;
+
+                var articleUrl = "http://" + language + ".wikivoyage.org/wiki/" + article.replace(/ /g, '_');
 
                 if (!markers[wvpoiId]) {
                     marker = L.circleMarker([lon, lat], getMarkerOptions(type));
 
                     if (name) {
-                        popupContents = '<b>' + name + '</b>';
+                        popupContents = '<b>' + name + '</b>'; 
                         if (description) {
                             popupContents += '<br/>' + description;
                         }
+                        popupContents += '<br/><a href="' + articleUrl + '" target="_blank">Read article "' + article + '"</a>';
                         marker.bindPopup(popupContents);
                     }
 

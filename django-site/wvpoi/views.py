@@ -218,7 +218,8 @@ class GEOJSONOutpuFormat(OutputFormat):
                     "name": listing.title,
                     "description": listing.description,
                     "type": listing.type,
-                    "wvpoiId": listing.id
+                    "wvpoiId": listing.id,
+                    "article": listing.article
                 }
             }) 
             has_previous = True
