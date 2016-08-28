@@ -17,7 +17,8 @@ class Languages(object):
     _all_languages = [
         Language('en', 'English'),
         Language('fr', 'French'),
-        Language('ru', 'Russian')
+        Language('ru', 'Russian'),
+        Language('de', 'German'),
     ]
 
     @staticmethod

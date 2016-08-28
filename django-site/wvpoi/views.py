@@ -37,7 +37,8 @@ class WikivoyageListingsFile(object):
         return {
             'en': 'English',
             'ru': 'Russian',
-            'fr': 'French'
+            'fr': 'French',
+            'de': 'German',
         }.get(self.language_code, 'Unknown')
 
     @property
@@ -61,8 +62,9 @@ class WikivoyageListingsFile(object):
             'osmand.gpx': 'GPX for OsmAnd',
             'obf': 'OBF (for OsmAnd), "wikivoyage" POI type',
             'user-defined.obf': 'OBF (for OsmAnd), "user-defined" POI type',
-            'xml': 'XML, "wikivoyage" POI type',
-            'user-defined.xml': 'XML, "user-defined" POI type',
+            'generic.xml': 'XML',
+            'xml': 'OsmAnd XML, "wikivoyage" POI type',
+            'user-defined.xml': 'OsmAnd XML, "user-defined" POI type',
             'validation-report.html': 'Validation report (HTML)'
         }.get(self._file_format, self._file_format)
 
