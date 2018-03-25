@@ -39,6 +39,7 @@ class WikivoyageListingsFile(object):
             'ru': 'Russian',
             'fr': 'French',
             'de': 'German',
+            'es': 'Spanish',
         }.get(self.language_code, 'Unknown')
 
     @property

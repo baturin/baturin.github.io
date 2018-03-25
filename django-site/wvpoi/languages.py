@@ -19,6 +19,7 @@ class Languages(object):
         Language('fr', 'French'),
         Language('ru', 'Russian'),
         Language('de', 'German'),
+        Language('es', 'Spanish'),
     ]
 
     @staticmethod
