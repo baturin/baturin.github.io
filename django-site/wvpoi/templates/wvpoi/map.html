@@ -20,11 +20,9 @@
     var map = L.map('map').setView([55.6799, 37.7737], 10);
     var layer = null;
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        accessToken: 'pk.eyJ1IjoiYmF0YWxleCIsImEiOiJjaWlkZGp4ZG8wMDB3dnNrdXMxMW42bDNwIn0.cW5ejS14v3NIB-1A3tDjfA'
     }).addTo(map);
 
     var languages = L.control();
